@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cloud-service-grafana-dashboard
+  labels:
+    grafana_dashboard: "1"
+data:
+  cloud-service-dashboard.json: |
+    {
+      "id": null,
+      "title": "Cloud Service Metrics",
+      "panels": [
+        {
+          "type": "stat",
+          "title": "Request Count",
+          "targets": [
+            { "expr": "sum(app_requests_total)", "refId": "A" }
+          ],
+          "gridPos": {"x": 0, "y": 0, "w": 6, "h": 4}
+        },
+        {
+          "type": "graph",
+          "title": "Requests per Path",
+          "targets": [
+            { "expr": "rate(app_requests_total[5m])", "refId": "A" }
+          ],
+          "gridPos": {"x": 6, "y": 0, "w": 18, "h": 8}
+        }
+      ],
+      "schemaVersion": 30,
+      "version": 1
+    }
